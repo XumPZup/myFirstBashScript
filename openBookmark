@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+
+fn(){
+	bookmarks=$(<bookmarks.conf)
+	LINES=$(awk "NR%2==0" $bookmarks)
+	count=1
+	local IFS='
+	'
+	for track in $LINES
+	do
+		echo "[$count]. $track"
+		count=$((count+1))
+	done
+	}
+fn
+echo -e "\nSelect playlist by number:"
+
+read n
+
+line=$(( n*2-1 ))
+
+xdg-open "$(awk "NR==$line" $bookmarks)"

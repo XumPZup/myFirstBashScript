@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+output=$(<bookmarks.conf)
+echo "Enter a URL:"
+read link
+f="$(curl "$link")"
+echo "$link" >> $output
+echo "$f" | grep -oE "<title>.*</title>" | sed 's/<title>//' | sed 's/<\/title>//' >> $output
